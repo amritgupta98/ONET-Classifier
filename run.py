@@ -25,7 +25,8 @@ ground_truth_label = test_df['ONET_NAME'].tolist()
 clf = Onet_classifier(model_name=model_name, occupations_df=occupations_df)
 preds = clf.predict(title=title, body=body, n=n, batch_size=predict_batch_size)
 
-precision, recall, f1, accuracy, top_k_accuracy = clf.calculate_metrics(predictions=preds, ground_truth=ground_truth_label)
+precision, recall, f1, accuracy, top_k_accuracy = clf.calculate_metrics(
+    predictions=preds, ground_truth=ground_truth_label)
 
 print('Precision of out-of-box model on test set: ', precision)
 print('Recall of out-of-box model on test set: ', recall)
@@ -37,13 +38,15 @@ print('Top-k Accuracy of out-of-box model on test set: ', top_k_accuracy)
 train_df = read_csv(train_df_path)
 print('shape of train_df', train_df.shape)
 
-clf.train(train_df=train_df, occupations_df=occupations_df, batch_size=train_batch_size, epochs=train_epochs)
+clf.train(train_df=train_df, occupations_df=occupations_df, 
+          batch_size=train_batch_size, epochs=train_epochs)
 clf.save_model('trained_model')
 
 # Checking performance of the trained model
 preds = clf.predict(title=title, body=body, n=n, batch_size=predict_batch_size)
 
-precision, recall, f1, accuracy, top_k_accuracy = clf.calculate_metrics(predictions=preds, ground_truth=ground_truth_label)
+precision, recall, f1, accuracy, top_k_accuracy = clf.calculate_metrics(
+    predictions=preds, ground_truth=ground_truth_label)
 
 print('Precision of trained model on test set: ', precision)
 print('Recall of trained model on test set: ', recall)
